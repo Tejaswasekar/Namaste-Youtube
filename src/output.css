@@ -146,8 +146,50 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 [hidden]:where(:not([hidden='until-found'])) {
   display: none !important;
 }
+.col-span-1 {
+  grid-column: span 1 / span 1;
+}
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+.col-span-8 {
+  grid-column: span 8 / span 8;
+}
+.col-span-10 {
+  grid-column: span 10 / span 10;
+}
+.mx-auto {
+  margin-inline: auto;
+}
+.flex {
+  display: flex;
+}
+.grid {
+  display: grid;
+}
 .table {
   display: table;
+}
+.h-1\/2 {
+  height: calc(1/2 * 100%);
+}
+.h-1\/12 {
+  height: calc(1/12 * 100%);
+}
+.h-auto {
+  height: auto;
+}
+.h-full {
+  height: 100%;
+}
+.w-1\/2 {
+  width: calc(1/2 * 100%);
+}
+.w-1\/12 {
+  width: calc(1/12 * 100%);
+}
+.w-full {
+  width: 100%;
 }
 .border-collapse {
   border-collapse: collapse;
@@ -155,12 +197,48 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .transform {
   transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 .resize {
   resize: both;
+}
+.grid-flow-col {
+  grid-auto-flow: column;
+}
+.grid-cols-12 {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-end {
+  justify-content: flex-end;
+}
+.rounded-full {
+  border-radius: calc(infinity * 1px);
+}
+.rounded-l-full {
+  border-top-left-radius: calc(infinity * 1px);
+  border-bottom-left-radius: calc(infinity * 1px);
+}
+.rounded-r-full {
+  border-top-right-radius: calc(infinity * 1px);
+  border-bottom-right-radius: calc(infinity * 1px);
 }
 .border {
   border-style: var(--tw-border-style);
   border-width: 1px;
+}
+.border-l-0 {
+  border-left-style: var(--tw-border-style);
+  border-left-width: 0px;
+}
+.object-cover {
+  object-fit: cover;
 }
 .text-center {
   text-align: center;
@@ -171,6 +249,12 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .outline {
   outline-style: var(--tw-outline-style);
   outline-width: 1px;
+}
+.focus\:outline-none {
+  &:focus {
+    --tw-outline-style: none;
+    outline-style: none;
+  }
 }
 @property --tw-rotate-x {
   syntax: "*";
