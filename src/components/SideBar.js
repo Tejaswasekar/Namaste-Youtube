@@ -18,6 +18,7 @@ import {
   FaFlag,
   FaQuestionCircle,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const SideBar = () => {
   const isMenuOpen = useSelector((store) => store.app.isMenuOpen);
@@ -31,8 +32,12 @@ const SideBar = () => {
       <div className="mb-6">
         <ul>
           <li className="flex items-center gap-4 p-2 hover:bg-gray-200 rounded-lg cursor-pointer">
-            <FaHome className="text-xl" />
-            <p>Home</p>
+            <Link to="/">
+              <FaHome className="text-xl" />
+            </Link>
+            <Link to="/">
+              <p>Home</p>
+            </Link>
           </li>
           <li className="flex items-center gap-4 p-2 hover:bg-gray-200 rounded-lg cursor-pointer">
             <FaPlay className="text-xl" />
