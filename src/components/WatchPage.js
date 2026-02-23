@@ -10,7 +10,7 @@ const WatchPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(closeMenu());
-  }, []);
+  },[dispatch]);
   return (
     <div className="px-5 py-4">
       <iframe
