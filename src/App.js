@@ -1,5 +1,4 @@
 import Body from "./components/Body";
-import Header from "./components/Header";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainContainer from "./components/MainContainer";
 import WatchPage from "./components/WatchPage";
@@ -22,7 +21,6 @@ const appRouter = createBrowserRouter([{
 function App() {
   return (
     <div>
-      <Header />
       <RouterProvider router={appRouter} />
     </div>
   );
