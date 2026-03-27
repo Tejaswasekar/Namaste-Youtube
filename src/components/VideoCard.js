@@ -49,7 +49,6 @@ const VideoCard = ({ info }) => {
 
   return (
     <div className="cursor-pointer">
-      {/* Thumbnail */}
       <div className="relative w-full aspect-video rounded-xl overflow-hidden">
         <img
           src={snippet?.thumbnails?.high?.url}
@@ -58,21 +57,16 @@ const VideoCard = ({ info }) => {
         />
       </div>
 
-      {/* Video Info */}
       <div className="flex mt-3">
-        {/* Channel Icon Placeholder */}
         <div className="w-9 h-9 bg-gray-300 rounded-full flex-shrink-0 mr-3"></div>
 
         <div className="flex flex-col">
-          {/* Title */}
           <h3 className="text-sm font-medium line-clamp-2 leading-5">
             {snippet?.title}
           </h3>
 
-          {/* Channel Name */}
           <p className="text-xs text-gray-600 mt-1">{snippet?.channelTitle}</p>
 
-          {/* Views + Time */}
           <p className="text-xs text-gray-600">
             {formatViews(statistics?.viewCount)} •{" "}
             {formatDate(snippet?.publishedAt)}

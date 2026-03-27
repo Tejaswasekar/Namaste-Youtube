@@ -1,24 +1,32 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { YOUTUBE_VIDEO_API } from "../utils/constants";
 import VideoCard from "./VideoCard";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const VideoContainer = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [nextPageToken, setNextPageToken] = useState(null);
+  const loadMoreRef = useRef(null);
 
-  const getVideos = useCallback(async () => {
+  const isMenuOpen = useSelector((store) => store.app.isMenuOpen);
+
+  const fetchVideos = useCallback(async (pageToken = "") => {
     try {
       setLoading(true);
-      const response = await fetch(YOUTUBE_VIDEO_API);
+      const response = await fetch(
+        `${YOUTUBE_VIDEO_API}&pageToken=${pageToken}`,
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch videos");
       }
 
       const json = await response.json();
-      setVideos(json.items || []);
+      setVideos((prevVideos) => [...prevVideos, ...json.items]);
+      setNextPageToken(json.nextPageToken);
     } catch (err) {
       console.error(err);
       setError("Something went wrong while fetching videos.");
@@ -28,20 +36,40 @@ const VideoContainer = () => {
   }, []);
 
   useEffect(() => {
-    getVideos();
-  }, [getVideos]);
+    fetchVideos();
+  }, [fetchVideos]);
 
-  // 🔥 Skeleton Loader (YouTube Style)
-  if (loading) {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && nextPageToken) {
+          fetchVideos(nextPageToken);
+        }
+      },
+      { threshold: 1.0 },
+    );
+
+    const currentRef = loadMoreRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [fetchVideos, nextPageToken]);
+
+  if (loading && videos.length === 0) {
     return (
-      <div className="px-6 py-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-x-4 gap-y-8">
-          {videos.map((video) => (
-            <Link to={`/watch?v=${video.id}`}>
-              <VideoCard key={video.id || video.etag} info={video} />
-            </Link>
-          ))}
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 p-4">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <div
+            key={index}
+            className="w-full h-48 bg-gray-200 animate-pulse rounded-lg"
+          ></div>
+        ))}
       </div>
     );
   }
@@ -51,12 +79,20 @@ const VideoContainer = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+    <div
+      className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 ${
+        isMenuOpen ? "lg:grid-cols-3" : "lg:grid-cols-4"
+      } gap-6 p-4`}
+    >
       {videos.map((video) => (
-        <Link to={`/watch?v=${video.id}`}>
-          <VideoCard key={video.id || video.etag} info={video} />
+        <Link to={`/watch?v=${video.id}`} key={video.id || video.etag}>
+          <VideoCard
+            info={video}
+            className={isMenuOpen ? "" : "transform scale-105"}
+          />
         </Link>
       ))}
+      <div ref={loadMoreRef} className="loading-trigger h-10"></div>
     </div>
   );
 };

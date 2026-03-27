@@ -12,27 +12,27 @@ const WatchPage = () => {
   useEffect(() => {
     dispatch(closeMenu());
   }, [dispatch]);
+
   return (
     <div className="flex flex-col w-full">
-      <div className="px-5 py-4 flex w-full">
-        <div>
+      <div className="px-5 py-4 flex flex-col lg:flex-row w-full gap-4">
+        <div className="flex-1">
           <iframe
-            className="rounded-xl"
-            width="1000"
-            height="600"
+            className="rounded-xl w-full h-[300px] lg:h-[600px]"
             src={`https://www.youtube.com/embed/` + searchParams.get("v")}
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            // referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           ></iframe>
         </div>
-        <div className="w-full">
-          <LiveChat/>
+        <div className="lg:w-1/3">
+          <LiveChat />
         </div>
       </div>
-      <CommentsContainer />
+      <div className="px-5">
+        <CommentsContainer />
+      </div>
     </div>
   );
 };

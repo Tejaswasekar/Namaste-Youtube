@@ -27,7 +27,7 @@ const SideBar = () => {
   if (!isMenuOpen) return null;
 
   return (
-    <div className="w-60 bg-white h-screen p-4">
+    <div className="fixed top-0 left-0 w-60 bg-white h-screen p-4 shadow-lg overflow-y-auto z-20">
       {/* Home section */}
       <div className="mb-6">
         <ul>

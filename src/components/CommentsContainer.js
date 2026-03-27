@@ -29,15 +29,15 @@ const Comment = ({ data }) => {
   const { name, text } = data;
 
   return (
-    <div className="flex gap-3 bg-gray-100 p-3 rounded-lg my-2">
+    <div className="flex gap-3 bg-gray-100 p-3 rounded-lg my-2 shadow-sm">
       <img
-        className="w-8 h-8"
+        className="w-8 h-8 rounded-full"
         src="https://cdn-icons-png.flaticon.com/128/149/149071.png"
         alt="user"
       />
       <div>
-        <p className="font-semibold">{name}</p>
-        <p>{text}</p>
+        <p className="font-semibold text-gray-800">{name}</p>
+        <p className="text-gray-700">{text}</p>
       </div>
     </div>
   );
@@ -58,7 +58,7 @@ const CommentsList = ({ comments }) => {
 const CommentsContainer = () => {
   return (
     <div className="m-2 p-2">
-      <h1 className="text-2xl font-bold">Comments</h1>
+      <h1 className="text-2xl font-bold mb-4">Comments</h1>
       <CommentsList comments={commentsData} />
     </div>
   );
